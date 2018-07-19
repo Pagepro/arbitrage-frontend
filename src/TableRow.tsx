@@ -1,46 +1,60 @@
 import * as React from 'react';
 
+import axios from 'axios';
+
+import calculateSpread from './utils/spreadCalculator';
+
 class TableRow extends React.Component <any, any> {
 
   constructor(props: any) {
     super(props);
-
     this.state = {
         buyValue: 0,
         sellValue: 0,
         spreadValue: 0
     }
-
+    this.updateSpread = this.updateSpread.bind(this);
   }
 
   public componentDidMount() {
-    const ws = new WebSocket('ws://localhost:3000');
-    ws.onmessage = (response) => {
-        const json = JSON.parse(response.data);
-        const spread = (((json.sell * 100 / json.buy) - 100) * 100) / 100;
+    axios.get("/api/websocket")
+    .then(({ data }: { data: any }) => data)
+    .then((websocketURL: any) => {
         this.setState({
-            buyValue: json.buy,
-            sellValue: json.sell,
-            spreadValue: spread
+            websocket: websocketURL
         });
-    };
-    ws.onopen = () => {
-        ws.send(`{ "pair": "${this.props.pair}", "buyExchange": "${this.props.buyExchange}", "sellExchange": "${this.props.sellExchange}" }`);
-    }
-    /*
-    const url = `/api/ticker/${this.props.pair.replace("/", "-")}/${this.props.buyExchange}/${this.props.sellExchange}`;
-    axios.get(url)
-    .then((ticker: any) => {
-        const buy = ticker.data.buy;
-        const sell = ticker.data.sell;
-        const spread = (((sell * 100 / buy) - 100) * 100) / 100;
+    })
+    .then(() => {
+        const ws = new WebSocket(this.state.websocket);
+        ws.onmessage = (response) => {
+            const {
+                ask: buyValue,
+                bid: sellValue,
+                pairName,
+                exchangeName
+            } = JSON.parse(response.data);
+            if (pairName === this.props.pair) {
+                const newState = exchangeName === this.props.buyExchange
+                    ? {
+                        buyValue
+                    } : {
+                        sellValue
+                    }
+                this.setState(newState, this.updateSpread);
+            }
+        };
+        // ws.onopen = () => {}
+    })
+    .catch((error) => alert(error));
+  }
+
+  public updateSpread() {
+      if (this.state.buyValue && this.state.sellValue) {
+        const spreadValue = calculateSpread(this.state.buyValue, this.state.sellValue);
         this.setState({
-            buyValue: buy,
-            sellValue: sell,
-            spreadValue: spread
+            spreadValue
         });
-    });
-    */
+      }
   }
 
   public render() {
@@ -49,12 +63,12 @@ class TableRow extends React.Component <any, any> {
         return (
             <tr>
                 <td>
-                    <a target="blank" href={buyExchangeLink}>
+                    <a target="_blank" href={buyExchangeLink}>
                         {this.props.buyExchange}
                     </a>
                 </td>
                 <td>
-                    <a target="blank" href={sellExchangeLink}>
+                    <a target="_blank" href={sellExchangeLink}>
                         {this.props.sellExchange}
                     </a>
                 </td>
