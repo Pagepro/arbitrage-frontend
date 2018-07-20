@@ -8,9 +8,12 @@ describe("Spread calculator test", () => {
         expect(calculateSpread(0.064677, 0.06462357)).toBe(-0.08);
     });
     it("Spread calculation", () => {
-        expect(calculateSpread(0.06468, 0.06462357)).toBe(-0.09);
+        expect(calculateSpread(0.06178725, 0.062004)).toBe(0.35);
     });
     it("Spread calculation", () => {
         expect(calculateSpread(0.6466449, 0.6462357)).toBe(-0.06);
+    });
+    it("Spread calculation", () => {
+        expect(calculateSpread(0, 0)).toBe(0);
     });
 });

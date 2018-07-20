@@ -8,8 +8,7 @@ class Dashboard extends React.Component <any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      config: [],
-      websocket: ""
+      config: []
     };
   }
 
@@ -24,17 +23,12 @@ class Dashboard extends React.Component <any, any> {
   }
 
   public render() {
-    let config = this.state.config;
-    config = config.map((item: any, index: any)=>{
-        return(
-            <PairTable pair={item.pair} exchanges={item.exchanges} key={item.pair} />
-        );
-    });
-    return (
-        <div>
-            {config}
-        </div>
-    );
+    const {
+        config
+    } = this.state;
+    return config.map(({ pair, exchanges }: { pair: string, exchanges: any }) => (
+        <PairTable pair={pair} exchanges={exchanges} key={pair} />
+    ));
   }
   
 }

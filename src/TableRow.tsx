@@ -1,13 +1,12 @@
 import * as React from 'react';
-
-import axios from 'axios';
-
+import websocketURL from './config/config';
 import calculateSpread from './utils/spreadCalculator';
 
 class TableRow extends React.Component <any, any> {
 
   constructor(props: any) {
     super(props);
+
     this.state = {
         buyValue: 0,
         sellValue: 0,
@@ -17,37 +16,27 @@ class TableRow extends React.Component <any, any> {
   }
 
   public componentDidMount() {
-    axios.get("/api/websocket")
-    .then(({ data }: { data: any }) => data)
-    .then((websocketURL: any) => {
-        this.setState({
-            websocket: websocketURL
-        });
-    })
-    .then(() => {
-        const ws = new WebSocket(this.state.websocket);
-        ws.onmessage = (response) => {
-            const {
-                ask: buyValue,
-                bid: sellValue,
-                pairName,
-                exchangeName
-            } = JSON.parse(response.data);
-            if (pairName === this.props.pair) {
-                if (exchangeName === this.props.buyExchange) {
-                    this.setState({
-                        buyValue
-                    }, this.updateSpread)
-                }
-                else if (exchangeName === this.props.sellExchange) {
-                    this.setState({
-                        sellValue
-                    }, this.updateSpread)
-                }
+    const ws = new WebSocket(websocketURL);
+    ws.onmessage = (response) => {
+        const {
+            ask: buyValue,
+            bid: sellValue,
+            pairName,
+            exchangeName
+        } = JSON.parse(response.data);
+        if (pairName === this.props.pair) {
+            if (exchangeName === this.props.buyExchange) {
+                this.setState({
+                    buyValue
+                }, this.updateSpread)
             }
-        };
-    })
-    .catch((error) => error);
+            else if (exchangeName === this.props.sellExchange) {
+                this.setState({
+                    sellValue
+                }, this.updateSpread)
+            }
+        }
+    };
   }
 
   public updateSpread() {
