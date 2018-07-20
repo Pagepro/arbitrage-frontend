@@ -1,5 +1,5 @@
 import * as React from 'react';
-import websocketURL from './config/config';
+import { websocketsConfig } from './config/config';
 import calculateSpread from './utils/spreadCalculator';
 
 class TableRow extends React.Component <any, any> {
@@ -16,7 +16,7 @@ class TableRow extends React.Component <any, any> {
   }
 
   public componentDidMount() {
-    const ws = new WebSocket(websocketURL);
+    const ws = new WebSocket(websocketsConfig.exchanges);
     ws.onmessage = (response) => {
         const {
             ask: buyValue,
@@ -24,13 +24,13 @@ class TableRow extends React.Component <any, any> {
             pairName,
             exchangeName
         } = JSON.parse(response.data);
+
         if (pairName === this.props.pair) {
             if (exchangeName === this.props.buyExchange) {
                 this.setState({
                     buyValue
                 }, this.updateSpread)
-            }
-            else if (exchangeName === this.props.sellExchange) {
+            } else if (exchangeName === this.props.sellExchange) {
                 this.setState({
                     sellValue
                 }, this.updateSpread)

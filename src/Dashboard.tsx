@@ -1,7 +1,7 @@
-import * as React from 'react';
-import PairTable from './PairTable';
-
 import axios from 'axios';
+import * as React from 'react';
+import { apiConfig } from './config/config';
+import PairTable from './PairTable';
 
 class Dashboard extends React.Component <any, any> {
 
@@ -13,7 +13,7 @@ class Dashboard extends React.Component <any, any> {
   }
 
   public componentDidMount() {
-    axios.get("/api/config")
+    axios.get(apiConfig.config)
     .then(({ data }: { data: any }) => data)
     .then((exchangesConfig: any) => {
         this.setState({

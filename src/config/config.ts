@@ -1,11 +1,20 @@
-let websocketURL = "";
-if (window.location.protocol === "https:") {
-    websocketURL += "wss:";
+const config: any = {
+    get websocketBase () {
+        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:"
+    
+        return `${protocol}//${window.location.host}`
+    }
 }
-else {
-    websocketURL += "ws:";
-}
-websocketURL += "//" + window.location.host;
-websocketURL += "/ws/websocket";
 
-export default websocketURL;
+const apiConfig = {
+    config: '/api/config'
+}
+
+const websocketsConfig = {
+    exchanges: `${config.websocketBase}/ws/exchanges`
+}
+
+export {
+    apiConfig,
+    websocketsConfig
+};
