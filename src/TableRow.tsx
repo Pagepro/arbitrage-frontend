@@ -47,7 +47,7 @@ class TableRow extends React.Component <any, any> {
             }
         };
     })
-    .catch((error) => alert(error));
+    .catch((error) => error);
   }
 
   public updateSpread() {
