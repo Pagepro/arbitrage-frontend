@@ -4,6 +4,8 @@ import calculateSpread from './utils/spreadCalculator';
 
 class TableRow extends React.Component <any, any> {
 
+    private ws: WebSocket;
+
   constructor(props: any) {
     super(props);
 
@@ -16,8 +18,8 @@ class TableRow extends React.Component <any, any> {
   }
 
   public componentDidMount() {
-    const ws = new WebSocket(websocketsConfig.exchanges);
-    ws.onmessage = (response) => {
+    this.ws = new WebSocket(websocketsConfig.exchanges);
+    this.ws.onmessage = (response) => {
         const {
             ask: buyValue,
             bid: sellValue,
@@ -37,6 +39,10 @@ class TableRow extends React.Component <any, any> {
             }
         }
     };
+  }
+
+  public componentWillUnmount() {
+    this.ws.close();
   }
 
   public updateSpread() {
