@@ -17,22 +17,31 @@ class PairTable extends React.Component <any, any> {
         }
     }
     const exchangesRows = exchangesPairs.map((item: any, index: any)=>{
+        const tableRowKey = `${this.props.pair}${item.buyExchange}${item.sellExchange}`;
         return(
-            <TableRow pair={this.props.pair} buyExchange={item.buyExchange} sellExchange={item.sellExchange} key={index} />
+            <TableRow pair={this.props.pair} buyExchange={item.buyExchange} sellExchange={item.sellExchange} key={tableRowKey} />
         );
     });
     return (
         <div>
-            <h1>{this.props.pair}</h1>
+            <header>
+                <h1>{this.props.pair}</h1>
+            </header>
             <table>
-                <tr>
-                    <th>Buy</th>
-                    <th>Sell</th>
-                    <th>Buy</th>
-                    <th>Sell</th>
-                    <th>Spread</th>
-                </tr>
-                {exchangesRows}
+                <tbody>
+                    <tr>
+                        <th colSpan={2}>Exchanges</th>
+                        <th colSpan={3}>Prices</th>
+                    </tr>
+                    <tr>
+                        <th>Buy</th>
+                        <th>Sell</th>
+                        <th>Buy</th>
+                        <th>Sell</th>
+                        <th>Spread</th>
+                    </tr>
+                    {exchangesRows}
+                </tbody>
             </table>
         </div>
     );

@@ -1,9 +1,9 @@
 import axios from 'axios';
 import * as React from 'react';
-import { apiConfig } from './config/config';
-import PairTable from './PairTable';
+import { apiConfig } from '../config/config';
+import Header from './Header';
 
-class Dashboard extends React.Component <any, any> {
+class History extends React.Component <any, any> {
 
   constructor(props: any) {
     super(props);
@@ -23,14 +23,13 @@ class Dashboard extends React.Component <any, any> {
   }
 
   public render() {
-    const {
-        config
-    } = this.state;
-    return config.map(({ pair, exchanges }: { pair: string, exchanges: any }) => (
-        <PairTable pair={pair} exchanges={exchanges} key={pair} />
-    ));
+    return (
+      <div>
+        <Header section="history" />
+      </div>
+    );
   }
   
 }
 
-export default Dashboard;
+export default History;

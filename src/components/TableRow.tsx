@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { websocketsConfig } from './config/config';
-import calculateSpread from './utils/spreadCalculator';
+import { marketsConfig, websocketsConfig } from '../config/config';
+import calculateSpread from '../utils/spreadCalculator';
 
 class TableRow extends React.Component <any, any> {
 
@@ -11,6 +11,7 @@ class TableRow extends React.Component <any, any> {
 
     this.state = {
         buyValue: 0,
+        justUpdated: false,
         sellValue: 0,
         spreadValue: 0
     }
@@ -28,14 +29,25 @@ class TableRow extends React.Component <any, any> {
         } = JSON.parse(response.data);
 
         if (pairName === this.props.pair) {
-            if (exchangeName === this.props.buyExchange) {
-                this.setState({
-                    buyValue
-                }, this.updateSpread)
-            } else if (exchangeName === this.props.sellExchange) {
-                this.setState({
-                    sellValue
-                }, this.updateSpread)
+
+            if (exchangeName === this.props.buyExchange || exchangeName === this.props.sellExchange) {
+
+                this.setState(exchangeName === this.props.buyExchange ? 
+                    {
+                        buyValue,
+                        justUpdated: true
+                    } :
+                    {
+                        justUpdated: true,
+                        sellValue
+                    }
+                );
+                this.updateSpread();
+                setTimeout(() => {
+                    this.setState({
+                        justUpdated: false
+                    });
+                }, 3000);
             }
         }
     };
@@ -55,10 +67,32 @@ class TableRow extends React.Component <any, any> {
   }
 
   public render() {
-        const buyExchangeLink = `http://google.com/search?q=${this.props.buyExchange}`;
-        const sellExchangeLink = `http://google.com/search?q=${this.props.sellExchange}`;
+      const buyExchangeLink = marketsConfig[this.props.buyExchange].marketLink(this.props.pair);
+      const sellExchangeLink = marketsConfig[this.props.sellExchange].marketLink(this.props.pair);
+      let stateCell;
+      if (this.state.spreadValue > 0) {
+          stateCell = (
+            <td className="positive">
+                {this.state.spreadValue}%
+            </td>
+          );
+      }
+      else if (this.state.spreadValue < 0) {
+          stateCell = (
+            <td className="negative">
+                {this.state.spreadValue}%
+            </td>
+          );
+      }
+      else {
+          stateCell = (
+            <td>
+                {this.state.spreadValue}
+            </td>
+          );
+      }
         return (
-            <tr>
+            <tr className={this.state.justUpdated ? "updated" : ""}>
                 <td>
                     <a target="_blank" href={buyExchangeLink}>
                         {this.props.buyExchange}
@@ -75,9 +109,7 @@ class TableRow extends React.Component <any, any> {
                 <td>
                     {this.state.sellValue}
                 </td>
-                <td>
-                    {this.state.spreadValue}
-                </td>
+                {stateCell}
             </tr>
         );
     }

@@ -1,28 +1,74 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+body {
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: #ddd;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+body div {
+  padding: 10px;
 }
-
-.App-title {
-  font-size: 1.5em;
+body div.siteHeader {
+  display: flex;
+  align-items: center;
 }
-
-.App-intro {
-  font-size: large;
+body div.siteHeader header {
+  color: #000;
+  display: inline-block;
+  font-size: 48px;
+  font-weight: bold;
+  cursor: pointer;
 }
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+body div header {
+  margin: 10px 10px 10px;
+}
+body div header h1 {
+  color: #333;
+  font-size: 28px;
+}
+body div table {
+  border-collapse: collapse;
+  border: 2px solid #000;
+  font-size: 16px;
+}
+body div table tbody tr {
+  width: 50vw;
+}
+body div table tbody tr.updated {
+  background-color: #ffff4d;
+}
+body div table tbody tr th {
+  background-color: #bbb;
+  width: 10vw;
+  border: 2px solid #000;
+  margin: 0;
+  padding: 5px;
+}
+body div table tbody tr td {
+  width: 10vw;
+  margin: 0;
+  padding: 5px;
+  border-style: solid;
+  border-color: #000;
+  border-width: 1px 2px;
+}
+body div table tbody tr td.positive {
+  background-color: #4dff4d;
+}
+body div table tbody tr td.negative {
+  background-color: #ff1a1a;
+}
+body a {
+  color: #337ab7;
+  text-decoration: none;
+  font-style: italic;
+}
+body a.active {
+  color: #003673;
+}
+body a.nav {
+  margin-left: 20px;
 }
