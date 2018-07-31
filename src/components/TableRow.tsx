@@ -16,6 +16,7 @@ class TableRow extends React.Component <any, any> {
         spreadValue: 0
     }
     this.updateSpread = this.updateSpread.bind(this);
+    // this.sendMessage = this.sendMessage.bind(this);
   }
 
   public componentDidMount() {
@@ -65,6 +66,17 @@ class TableRow extends React.Component <any, any> {
         });
       }
   }
+/*
+  public sendMessage() {
+    const ticker = {
+        buyExchange: this.props.buyExchange,
+        pairName: this.props.pair,
+        sellExchange: this.props.sellExchange,
+        spread: this.state.spreadValue
+    };
+    this.ws.send(JSON.stringify(ticker));
+  }
+  */
 
   public render() {
       const buyExchangeLink = marketsConfig[this.props.buyExchange].marketLink(this.props.pair);

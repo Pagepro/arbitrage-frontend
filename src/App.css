@@ -72,3 +72,12 @@ body a.active {
 body a.nav {
   margin-left: 20px;
 }
+header.historyHeader {
+  margin: 20px;
+}
+table.history tr td {
+  text-align: center;
+}
+table.history tr td.pair {
+  font-weight: bold;
+}

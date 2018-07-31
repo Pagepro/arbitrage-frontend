@@ -7,7 +7,8 @@ const config: any = {
 }
 
 const apiConfig = {
-    config: '/api/config'
+    config: '/api/config',
+    history: '/api/history'
 }
 
 const websocketsConfig = {
@@ -32,7 +33,7 @@ const marketsConfig = {
     },
     Bittrex: {
         marketLink (pair: string) {
-            return `https://bittrex.com/Market/Index?MarketName==${pair.split("/")[1]}-${pair.split("/")[0]}`;
+            return `https://bittrex.com/Market/Index?MarketName=${pair.split("/")[1]}-${pair.split("/")[0]}`;
         }
     },
     GDAX: {
