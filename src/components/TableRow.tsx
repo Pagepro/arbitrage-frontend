@@ -22,6 +22,14 @@ class TableRow extends React.Component <any, any> {
   }
 
   public componentDidMount() {
+    this.createWebsocket();
+  }
+
+  public componentWillUnmount() {
+    this.ws.close();
+  }
+
+  public createWebsocket = () => {
     this.ws = new WebSocket(websocketsConfig.exchanges);
     this.ws.onmessage = (response) => {
         clearTimeout(this.timeout);
@@ -57,10 +65,9 @@ class TableRow extends React.Component <any, any> {
             }
         }
     };
-  }
-
-  public componentWillUnmount() {
-    this.ws.close();
+    this.ws.onclose = () => {
+        this.createWebsocket();
+    };
   }
 
   public clearState() {
