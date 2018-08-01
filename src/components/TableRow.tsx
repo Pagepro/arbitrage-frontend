@@ -5,6 +5,7 @@ import calculateSpread from '../utils/spreadCalculator';
 class TableRow extends React.Component <any, any> {
 
     private ws: WebSocket;
+    private timeout: any;
 
   constructor(props: any) {
     super(props);
@@ -15,13 +16,17 @@ class TableRow extends React.Component <any, any> {
         sellValue: 0,
         spreadValue: 0
     }
+    
+    this.clearState = this.clearState.bind(this);
     this.updateSpread = this.updateSpread.bind(this);
-    // this.sendMessage = this.sendMessage.bind(this);
   }
 
   public componentDidMount() {
     this.ws = new WebSocket(websocketsConfig.exchanges);
     this.ws.onmessage = (response) => {
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(this.clearState, 10000);
+
         const {
             ask: buyValue,
             bid: sellValue,
@@ -58,6 +63,15 @@ class TableRow extends React.Component <any, any> {
     this.ws.close();
   }
 
+  public clearState() {
+    this.setState({
+        buyValue: 0,
+        justUpdated: false,
+        sellValue: 0,
+        spreadValue: 0
+    });
+  }
+
   public updateSpread() {
       if (this.state.buyValue && this.state.sellValue) {
         const spreadValue = calculateSpread(this.state.buyValue, this.state.sellValue);
@@ -66,17 +80,6 @@ class TableRow extends React.Component <any, any> {
         });
       }
   }
-/*
-  public sendMessage() {
-    const ticker = {
-        buyExchange: this.props.buyExchange,
-        pairName: this.props.pair,
-        sellExchange: this.props.sellExchange,
-        spread: this.state.spreadValue
-    };
-    this.ws.send(JSON.stringify(ticker));
-  }
-  */
 
   public render() {
       const buyExchangeLink = marketsConfig[this.props.buyExchange].marketLink(this.props.pair);
