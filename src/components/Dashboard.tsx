@@ -4,7 +4,11 @@ import { apiConfig } from '../config/config';
 import Header from './Header';
 import PairTable from './PairTable';
 
-class Dashboard extends React.Component <any, any> {
+interface IState {
+  config: object[]
+}
+
+class Dashboard extends React.Component <{}, IState> {
 
   constructor(props: any) {
     super(props);

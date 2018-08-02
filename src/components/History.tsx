@@ -4,10 +4,15 @@ import { apiConfig } from '../config/config';
 import Header from './Header';
 import HistoryTableRow from './HistoryTableRow';
 
-class History extends React.Component <any, any> {
+interface IState {
+  config: object[]
+}
+
+class History extends React.Component <{}, IState> {
 
   constructor(props: any) {
     super(props);
+
     this.state = {
       config: []
     };
@@ -24,14 +29,13 @@ class History extends React.Component <any, any> {
   }
 
   public render() {
-    let {
+    const {
         config
     } = this.state;
-    config = config.map(({ pair, exchanges }: { pair: string, exchanges: any }) => {
-      return (
+    const rows = config.map(({ pair }: { pair: string }) =>
         <HistoryTableRow key={pair+"-history"} pair={pair} />
-      );
-    });
+    );
+
     return (
       <div>
         <Header section="history" />
@@ -47,7 +51,7 @@ class History extends React.Component <any, any> {
                     <th>Spread</th>
                     <th>Date & time</th>
                 </tr>
-                {config}
+                {rows}
             </tbody>
         </table>
       </div>

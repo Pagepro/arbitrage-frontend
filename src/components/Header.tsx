@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-class Header extends React.Component <any, any> {
+interface IProps {
+    section: string
+}
+
+class Header extends React.Component <IProps, {}> {
 
   constructor(props: any) {
     super(props);

@@ -1,7 +1,12 @@
 import * as React from 'react';
 import TableRow from './TableRow';
 
-class PairTable extends React.Component <any, any> {
+interface IProps {
+    exchanges: string[],
+    pair: string
+}
+
+class PairTable extends React.Component <IProps, {}> {
 
   constructor(props: any) {
     super(props);
@@ -19,7 +24,11 @@ class PairTable extends React.Component <any, any> {
     const exchangesRows = exchangesPairs.map((item: any, index: any)=>{
         const tableRowKey = `${this.props.pair}${item.buyExchange}${item.sellExchange}`;
         return(
-            <TableRow pair={this.props.pair} buyExchange={item.buyExchange} sellExchange={item.sellExchange} key={tableRowKey} />
+            <TableRow 
+            pair={this.props.pair} 
+            buyExchange={item.buyExchange} 
+            sellExchange={item.sellExchange} 
+            key={tableRowKey} />
         );
     });
     return (
