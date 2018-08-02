@@ -108,11 +108,11 @@ class TableRow extends React.Component <IProps, IState> {
 
   public getSpreadValueCellClass () {
       const {
-      spreadValue
+        spreadValue
       } = this.state
 
       if (spreadValue === 0) {
-          return '';
+        return '';
       }
       
       return spreadValue > 0 ? 'positive' : 'negative';

@@ -61,16 +61,14 @@ body div table tbody tr td.positive {
 body div table tbody tr td.negative {
   background-color: #ff1a1a;
 }
-body a {
+body .nav {
   color: #337ab7;
   text-decoration: none;
   font-style: italic;
-}
-body a.active {
-  color: #003673;
-}
-body a.nav {
   margin-left: 20px;
+}
+body .nav.active {
+  color: #003673;
 }
 header.historyHeader {
   margin: 20px;

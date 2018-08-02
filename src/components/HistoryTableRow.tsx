@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as Moment from 'moment';
 import * as React from 'react';
 import { apiConfig } from '../config/config';
 
@@ -32,15 +33,12 @@ class HistoryTableRow extends React.Component <IProps, IState> {
     axios.get(`${apiConfig.history}/${this.props.pair.replace("/", "-")}`)
     .then(({ data }: { data: any }) => data)
     .then((spread: any) => {
-        const date = `${spread.time.split("-")[2].split("T")[0]}.${spread.time.split("-")[1]}.${spread.time.split("-")[0]}`;
-        const time = `${spread.time.split("-")[2].split("T")[1].split("Z")[0]}`;
-        const dateTime = `${date} ${time}`;
 
         this.setState({
             buyExchange: spread.buyExchange,
             sellExchange: spread.sellExchange,
             spread: spread.spread,
-            time: dateTime
+            time: Moment(spread.time).toString()
         });
     });
   }

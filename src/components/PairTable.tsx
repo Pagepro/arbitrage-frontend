@@ -12,10 +12,7 @@ class PairTable extends React.Component <IProps, {}> {
     super(props);
   }
 
-  public render() {
-    const {
-        exchanges
-    } = this.props
+  public generateExchangeRows(exchanges: string[]): object[] {
     const exchangesPairs = [];
     for (const firstExchange of exchanges) {
         for (const secondExchange of exchanges) {
@@ -25,16 +22,24 @@ class PairTable extends React.Component <IProps, {}> {
             }
         }
     }
-    const exchangesRows = exchangesPairs.map((item: any, index: any)=>{
+    const exchangeRows = exchangesPairs.map((item: any, index: any)=>{
         const tableRowKey = `${this.props.pair}${item.buyExchange}${item.sellExchange}`;
         return(
             <TableRow 
-            pair={this.props.pair} 
-            buyExchange={item.buyExchange} 
-            sellExchange={item.sellExchange} 
-            key={tableRowKey} />
+                pair={this.props.pair} 
+                buyExchange={item.buyExchange} 
+                sellExchange={item.sellExchange} 
+                key={tableRowKey} />
         );
     });
+    return exchangeRows;
+  }
+
+  public render() {
+    const {
+        exchanges
+    } = this.props
+    const exchangesRows = this.generateExchangeRows(exchanges);
     return (
         <div>
             <header>

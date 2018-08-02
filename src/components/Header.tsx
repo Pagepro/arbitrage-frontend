@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 interface IProps {
     section: string
@@ -13,13 +14,13 @@ class Header extends React.Component <IProps, {}> {
   public render() {
     return (
         <div className="siteHeader">
-            <a href="/">
+            <Link to="/">
                 <header>
                     Arbitrage App
                 </header>
-            </a>
-            <a href="/dashboard" className={this.props.section === "dashboard" ? "nav active" : "nav"}>Dashboard</a>
-            <a href="/history" className={this.props.section === "history" ? "nav active" : "nav"}>History</a>
+            </Link>
+            <Link to="/dashboard" className={this.props.section === "dashboard" ? "nav active" : "nav"}>Dashboard</Link>
+            <Link to="/history" className={this.props.section === "history" ? "nav active" : "nav"}>History</Link>
         </div>
     );
   }
