@@ -1,9 +1,14 @@
 import axios from 'axios';
 import * as React from 'react';
-import { apiConfig } from './config/config';
+import { apiConfig } from '../config/config';
+import Header from './Header';
 import PairTable from './PairTable';
 
-class Dashboard extends React.Component <any, any> {
+interface IState {
+  config: object[]
+}
+
+class Dashboard extends React.Component <{}, IState> {
 
   constructor(props: any) {
     super(props);
@@ -26,9 +31,15 @@ class Dashboard extends React.Component <any, any> {
     const {
         config
     } = this.state;
-    return config.map(({ pair, exchanges }: { pair: string, exchanges: any }) => (
-        <PairTable pair={pair} exchanges={exchanges} key={pair} />
-    ));
+    const tables = config.map(({ pair, exchanges }: { pair: string, exchanges: any }) =>
+        <PairTable key={pair} pair={pair} exchanges={exchanges} />
+    );
+    return (
+      <div>
+        <Header section="dashboard" />
+        {tables}
+      </div>
+    );
   }
   
 }

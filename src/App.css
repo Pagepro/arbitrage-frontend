@@ -1,28 +1,81 @@
-.App {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100vw;
+  overflow-x: hidden;
+  background-color: #ddd;
+}
+body div {
+  padding: 10px;
+}
+body div.siteHeader {
+  display: flex;
+  align-items: center;
+}
+body div.siteHeader header {
+  color: #000;
+  display: inline-block;
+  font-size: 48px;
+  font-weight: bold;
+  cursor: pointer;
+}
+body div header {
+  margin: 10px 10px 10px;
+}
+body div header h1 {
+  color: #333;
+  font-size: 28px;
+}
+body div table {
+  border-collapse: collapse;
+  border: 2px solid #000;
+  font-size: 16px;
+}
+body div table tbody tr {
+  width: 50vw;
+}
+body div table tbody tr.updated {
+  background-color: #ffff4d;
+}
+body div table tbody tr th {
+  background-color: #bbb;
+  width: 10vw;
+  border: 2px solid #000;
+  margin: 0;
+  padding: 5px;
+}
+body div table tbody tr td {
+  width: 10vw;
+  margin: 0;
+  padding: 5px;
+  border-style: solid;
+  border-color: #000;
+  border-width: 1px 2px;
+}
+body div table tbody tr td.positive {
+  background-color: #4dff4d;
+}
+body div table tbody tr td.negative {
+  background-color: #ff1a1a;
+}
+body .nav {
+  color: #337ab7;
+  text-decoration: none;
+  font-style: italic;
+  margin-left: 20px;
+}
+body .active {
+  color: #003673;
+}
+header.historyHeader {
+  margin: 20px;
+}
+table.history tr td {
   text-align: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+table.history tr td.pair {
+  font-weight: bold;
 }
