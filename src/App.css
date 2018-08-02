@@ -67,7 +67,7 @@ body .nav {
   font-style: italic;
   margin-left: 20px;
 }
-body .nav.active {
+body .active {
   color: #003673;
 }
 header.historyHeader {

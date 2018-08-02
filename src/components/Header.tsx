@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 interface IProps {
     section: string
@@ -19,8 +19,8 @@ class Header extends React.Component <IProps, {}> {
                     Arbitrage App
                 </header>
             </Link>
-            <Link to="/dashboard" className={this.props.section === "dashboard" ? "nav active" : "nav"}>Dashboard</Link>
-            <Link to="/history" className={this.props.section === "history" ? "nav active" : "nav"}>History</Link>
+            <NavLink to="/dashboard" className="nav" activeClassName="active">Dashboard</NavLink>
+            <NavLink to="/history" className="nav" activeClassName="active">History</NavLink>
         </div>
     );
   }

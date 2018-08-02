@@ -26,6 +26,9 @@ class HistoryTableRow extends React.Component <IProps, IState> {
         time: ''
     };
     this.sendRequest = this.sendRequest.bind(this);
+  }
+
+  public componentDidMount() {
     this.sendRequest();
   }
 
@@ -38,7 +41,7 @@ class HistoryTableRow extends React.Component <IProps, IState> {
             buyExchange: spread.buyExchange,
             sellExchange: spread.sellExchange,
             spread: spread.spread,
-            time: Moment(spread.time).toString()
+            time: Moment(spread.time).format("MMMM Do YYYY, HH:mm:ss")
         });
     });
   }
