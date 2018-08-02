@@ -28,18 +28,16 @@ class Dashboard extends React.Component <{}, IState> {
   }
 
   public render() {
-    let {
+    const {
         config
     } = this.state;
-    config = config.map(({ pair, exchanges }: { pair: string, exchanges: any }) => {
-      return (
+    const tables = config.map(({ pair, exchanges }: { pair: string, exchanges: any }) =>
         <PairTable key={pair} pair={pair} exchanges={exchanges} />
-      );
-    });
+    );
     return (
       <div>
         <Header section="dashboard" />
-        {config}
+        {tables}
       </div>
     );
   }

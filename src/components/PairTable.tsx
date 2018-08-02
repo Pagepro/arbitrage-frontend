@@ -13,12 +13,16 @@ class PairTable extends React.Component <IProps, {}> {
   }
 
   public render() {
-    const exchanges = this.props.exchanges;
+    const {
+        exchanges
+    } = this.props
     const exchangesPairs = [];
-    for (let i = 0; i < exchanges.length; i++) {
-        for (let j = i + 1; j < exchanges.length; j++) {
-            exchangesPairs.push({buyExchange: exchanges[i], sellExchange: exchanges[j]});
-            exchangesPairs.push({buyExchange: exchanges[j], sellExchange: exchanges[i]});
+    for (const firstExchange of exchanges) {
+        for (const secondExchange of exchanges) {
+            if (firstExchange !== secondExchange) {
+                exchangesPairs.push({buyExchange: firstExchange, sellExchange: secondExchange});
+                exchangesPairs.push({buyExchange: secondExchange, sellExchange: firstExchange});
+            }
         }
     }
     const exchangesRows = exchangesPairs.map((item: any, index: any)=>{

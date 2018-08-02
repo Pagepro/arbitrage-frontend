@@ -67,7 +67,7 @@ class TableRow extends React.Component <IProps, IState> {
                         spreadValue: this.state.spreadValue
                     } :
                     {
-                        buyValue: this.state.spreadValue,
+                        buyValue: this.state.buyValue,
                         justUpdated: true,
                         sellValue,
                         spreadValue: this.state.spreadValue
@@ -106,15 +106,21 @@ class TableRow extends React.Component <IProps, IState> {
       }
   }
 
+  public getSpreadValueCellClass () {
+      const {
+      spreadValue
+      } = this.state
+
+      if (spreadValue === 0) {
+          return '';
+      }
+      
+      return spreadValue > 0 ? 'positive' : 'negative';
+  }
+
   public render() {
       const buyExchangeLink = marketsConfig[this.props.buyExchange].marketLink(this.props.pair);
       const sellExchangeLink = marketsConfig[this.props.sellExchange].marketLink(this.props.pair);
-      const stateCell = (
-        <td className={this.getSpreadValueCellClass()}>
-            {this.state.spreadValue}%
-        </td>
-
-      );
         return (
             <tr className={this.state.justUpdated ? 'updated' : ''}>
                 <td>
@@ -133,21 +139,11 @@ class TableRow extends React.Component <IProps, IState> {
                 <td>
                     {this.state.sellValue}
                 </td>
-                {stateCell}
+                <td className={this.getSpreadValueCellClass()}>
+                    {this.state.spreadValue}%
+                </td>
             </tr>
         );
-    }
-
-    public getSpreadValueCellClass () {
-        const {
-        spreadValue
-        } = this.state
-
-        if (spreadValue === 0) {
-            return '';
-        }
-        
-        return spreadValue > 0 ? 'positive' : 'negative';
     }
   
 }
