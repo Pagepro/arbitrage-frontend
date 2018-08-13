@@ -79,3 +79,20 @@ table.history tr td {
 table.history tr td.pair {
   font-weight: bold;
 }
+input {
+  text-align: center;
+  margin: 5px;
+  padding: 5px;
+  width: 100px;
+}
+body table tr td a {
+  color: #003673;
+  text-decoration: none;
+  font-style: italic;
+}
+body table tr td {
+  font-size: 14px;
+}
+span.ethValue {
+  margin-left: 20px;
+}
