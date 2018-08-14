@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { marketsConfig, websocketsConfig } from '../config/config';
+import { marketsConfig } from '../config/config';
 import { getBuyOrderQuantity, getBuyOrderValue, getSellOrderValue } from '../utils/ordesValuesCalculator';
 import calculateSpread from '../utils/spreadCalculator';
 
@@ -24,7 +24,6 @@ interface IState {
 
 class TableRow extends React.Component<IProps, IState> {
 
-    private ws: WebSocket;
     private timeout: any;
     private isComponentMounted: boolean;
 
@@ -46,67 +45,58 @@ class TableRow extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
-        this.isComponentMounted = true;
-        this.createWebsocket();
+        window.addEventListener('websocketMessage',this.handleWebsocketMessage);
         this.setState({
             buyOrderQuantity: getBuyOrderQuantity(this.props.pair, this.props.buyExchange, this.props.coins)
         });
     }
 
     public componentWillUnmount() {
-        this.isComponentMounted = false;
-        this.ws.close();
+        window.removeEventListener('websocketMessage',this.handleWebsocketMessage);
     }
 
-    public createWebsocket = () => {
-        this.ws = new WebSocket(websocketsConfig.exchanges);
-        this.ws.onmessage = (response) => {
+    public handleWebsocketMessage = (ticker: any) => {
+
+        const {
+            ask: buyValue,
+            bid: sellValue,
+            pairName,
+            exchangeName
+        } = ticker.detail;
+
+        if (pairName === this.props.pair) {
+            
             clearTimeout(this.timeout);
             this.timeout = setTimeout(this.clearState, 10000);
 
-            const {
-                ask: buyValue,
-                bid: sellValue,
-                pairName,
-                exchangeName
-            } = JSON.parse(response.data);
+            if (exchangeName === this.props.buyExchange || exchangeName === this.props.sellExchange) {
 
-            if (pairName === this.props.pair) {
-
-                if (exchangeName === this.props.buyExchange || exchangeName === this.props.sellExchange) {
-
-                    this.setState(exchangeName === this.props.buyExchange ?
-                        {
-                            buyValue,
-                            justUpdated: true,
-                            sellValue: this.state.sellValue,
-                            spreadValue: this.state.spreadValue
-                        } :
-                        {
-                            buyValue: this.state.buyValue,
-                            justUpdated: true,
-                            sellValue,
-                            spreadValue: this.state.spreadValue
-                        }, () => {
-                            this.updateSpread();
-                            this.updateProfitValue();
-                            setTimeout(() => {
-                                if (this.isComponentMounted) {
-                                    this.setState({
-                                        justUpdated: false
-                                    });
-                                }
-                            }, 3000);
-                        }
-                    );
-                }
+                this.setState(exchangeName === this.props.buyExchange ?
+                    {
+                        buyValue,
+                        justUpdated: true,
+                        sellValue: this.state.sellValue,
+                        spreadValue: this.state.spreadValue
+                    } :
+                    {
+                        buyValue: this.state.buyValue,
+                        justUpdated: true,
+                        sellValue,
+                        spreadValue: this.state.spreadValue
+                    }, () => {
+                        this.updateSpread();
+                        this.updateProfitValue();
+                        setTimeout(() => {
+                            if (this.isComponentMounted) {
+                                this.setState({
+                                    justUpdated: false
+                                });
+                            }
+                        }, 3000);
+                    }
+                );
             }
-        };
-        this.ws.onclose = () => {
-            if (this.isComponentMounted) {
-                this.createWebsocket();
-            }
-        };
+        }
     }
 
     public clearState() {
@@ -134,9 +124,7 @@ class TableRow extends React.Component<IProps, IState> {
             this.setState({
                 orderProfitValue: 0
             });
-        }
-
-        else {
+        } else {
             const sellOrderValue = getSellOrderValue(this.state.sellValue, this.props.coins, this.props.sellExchange);
             const buyOrderValue = getBuyOrderValue(this.props.pair, this.props.buyExchange, this.props.coins, this.state.buyValue);
             const orderProfitValue = sellOrderValue - buyOrderValue;
@@ -162,6 +150,7 @@ class TableRow extends React.Component<IProps, IState> {
         const buyExchangeLink = marketsConfig[this.props.buyExchange].marketLink(this.props.pair);
         const sellExchangeLink = marketsConfig[this.props.sellExchange].marketLink(this.props.pair);
         const currencies = this.props.pair.split("/");
+        
         const {
             orderProfitValue
         } = this.state;
