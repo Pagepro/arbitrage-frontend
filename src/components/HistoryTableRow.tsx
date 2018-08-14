@@ -10,7 +10,7 @@ interface IProps {
 interface IState {
     buyExchange: string,
     sellExchange: string,
-    spread: number,
+    spread: string,
     time: string
 }
 
@@ -22,7 +22,7 @@ class HistoryTableRow extends React.Component <IProps, IState> {
     this.state = {
         buyExchange: '',
         sellExchange: '',
-        spread: 0,
+        spread: '-',
         time: ''
     };
     this.sendRequest = this.sendRequest.bind(this);
@@ -36,13 +36,14 @@ class HistoryTableRow extends React.Component <IProps, IState> {
     axios.get(`${apiConfig.history}/${this.props.pair.replace("/", "-")}`)
     .then(({ data }: { data: any }) => data)
     .then((spread: any) => {
-
-        this.setState({
-            buyExchange: spread.buyExchange,
-            sellExchange: spread.sellExchange,
-            spread: spread.spread,
-            time: Moment(spread.time).format("MMMM Do YYYY, HH:mm:ss")
-        });
+        if (spread) {
+            this.setState({
+                buyExchange: spread.buyExchange,
+                sellExchange: spread.sellExchange,
+                spread: spread.spread.toString(),
+                time: Moment(spread.time).format("MMMM Do YYYY, HH:mm:ss")
+            });
+        }
     });
   }
 
@@ -52,7 +53,13 @@ class HistoryTableRow extends React.Component <IProps, IState> {
             <td className='pair'>{this.props.pair}</td>
             <td>{this.state.buyExchange}</td>
             <td>{this.state.sellExchange}</td>
-            <td>{this.state.spread}%</td>
+            <td>
+                {
+                    this.state.spread !== '-'
+                    ? `${this.state.spread}%`
+                    : this.state.spread
+                }
+            </td>
             <td>{this.state.time}</td>
         </tr>
     );
