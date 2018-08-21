@@ -149,13 +149,16 @@ class TableRow extends React.Component<IProps, IState> {
     public render() {
         const buyExchangeLink = marketsConfig[this.props.buyExchange].marketLink(this.props.pair);
         const sellExchangeLink = marketsConfig[this.props.sellExchange].marketLink(this.props.pair);
-        const currencies = this.props.pair.split("/");
+        const [
+            firstCurrency,
+            secondCurrency
+        ] = this.props.pair.split("/");
         
         const {
             orderProfitValue
         } = this.state;
         
-        const PLNValue = currencies[1] === 'BTC'
+        const PLNValue = secondCurrency === 'BTC'
             ? (orderProfitValue * this.props.btcValue).toFixed(2)
             : (orderProfitValue * this.props.ethValue).toFixed(2);
         
@@ -172,25 +175,25 @@ class TableRow extends React.Component<IProps, IState> {
                     </a>
                 </td>
                 <td>
-                    {this.state.buyValue} {currencies[1]}
+                    {this.state.buyValue} {secondCurrency}
                 </td>
                 <td>
-                    {this.state.sellValue} {currencies[1]}
+                    {this.state.sellValue} {secondCurrency}
                 </td>
                 <td className={this.getSpreadValueCellClass()}>
                     {this.state.spreadValue}%
                 </td>
                 <td>
-                    {this.state.buyOrderQuantity.toFixed(8)} {currencies[0]}
+                    {this.state.buyOrderQuantity.toFixed(8)} {firstCurrency}
                 </td>
                 <td>
-                    {this.props.coins.toFixed(8)} {currencies[0]}
+                    {this.props.coins.toFixed(8)} {firstCurrency}
                 </td>
                 <td>
                     { orderProfitValue !== 0
                         ? orderProfitValue > 0
-                            ? `${orderProfitValue.toFixed(8)} ${currencies[1]} / ${PLNValue} PLN (PROFIT)`
-                            : `${orderProfitValue.toFixed(8)} ${currencies[1]} / ${PLNValue} PLN (LOSS)`
+                            ? `${orderProfitValue.toFixed(8)} ${secondCurrency} / ${PLNValue} PLN (PROFIT)`
+                            : `${orderProfitValue.toFixed(8)} ${secondCurrency} / ${PLNValue} PLN (LOSS)`
                         : `${orderProfitValue}`
                     }
                 </td>

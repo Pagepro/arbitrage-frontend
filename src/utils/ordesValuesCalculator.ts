@@ -2,7 +2,9 @@ import { marketsConfig } from "../config/config";
 
 const getBuyOrderQuantity = (pair: string, exchange: string, coins: number) => {
 
-    const currency = pair.split("/")[0];
+    const [
+        currency
+    ] = pair.split("/");
     const withdrawal = marketsConfig[exchange].withdrawals[currency];
     const takerFee = marketsConfig[exchange].takerFee;
 

@@ -27,9 +27,7 @@ class Dashboard extends React.Component <{}, IState> {
     };
 
     this.createWebsocket = this.createWebsocket.bind(this);
-
-    this.updateBTCValue = this.updateBTCValue.bind(this);
-    this.updateETHValue = this.updateETHValue.bind(this);
+    this.updateCurrencyValues = this.updateCurrencyValues.bind(this);
   }
 
   public componentDidMount() {
@@ -68,16 +66,12 @@ class Dashboard extends React.Component <{}, IState> {
     };
   }
 
-  public updateBTCValue(event: any) {
-    this.setState({
-      BTCtoPLN: event.target.value
-    });
-  }
-
-  public updateETHValue(event: any) {
-    this.setState({
-      ETHtoPLN: event.target.value
-    });
+  public updateCurrencyValues(fieldName: string) {
+    return (event: any) => {
+      const stateObject = {};
+      stateObject[fieldName] = event.target.value;
+      this.setState(stateObject);
+    }
   }
 
   public render() {
@@ -97,10 +91,10 @@ class Dashboard extends React.Component <{}, IState> {
       <div>
         <Header section="dashboard" />
         <span>
-          <strong>BTC/PLN price:</strong><input type="number" min="1" step="1" value={this.state.BTCtoPLN} onChange={this.updateBTCValue} />
+          <strong>BTC/PLN price:</strong><input id="BTCtoPLN" type="number" min="1" step="1" value={this.state.BTCtoPLN} onChange={this.updateCurrencyValues("BTCtoPLN")} />
         </span>
         <span className="ethValue">
-          <strong>ETH/PLN price:</strong><input type="number" min="1" step="1" value={this.state.ETHtoPLN} onChange={this.updateETHValue} />
+          <strong>ETH/PLN price:</strong><input id="ETHtoPLN" type="number" min="1" step="1" value={this.state.ETHtoPLN} onChange={this.updateCurrencyValues("ETHtoPLN")} />
         </span>
         {tables}
       </div>
