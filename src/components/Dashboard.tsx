@@ -91,10 +91,10 @@ class Dashboard extends React.Component <{}, IState> {
       <div>
         <Header section="dashboard" />
         <span>
-          <strong>BTC/PLN price:</strong><input id="BTCtoPLN" type="number" min="1" step="1" value={this.state.BTCtoPLN} onChange={this.updateCurrencyValues("BTCtoPLN")} />
+          <strong>BTC/PLN price:</strong><input type="number" min="1" step="1" value={this.state.BTCtoPLN} onChange={this.updateCurrencyValues("BTCtoPLN")} />
         </span>
         <span className="ethValue">
-          <strong>ETH/PLN price:</strong><input id="ETHtoPLN" type="number" min="1" step="1" value={this.state.ETHtoPLN} onChange={this.updateCurrencyValues("ETHtoPLN")} />
+          <strong>ETH/PLN price:</strong><input type="number" min="1" step="1" value={this.state.ETHtoPLN} onChange={this.updateCurrencyValues("ETHtoPLN")} />
         </span>
         {tables}
       </div>
