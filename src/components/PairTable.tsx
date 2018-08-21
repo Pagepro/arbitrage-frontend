@@ -2,14 +2,26 @@ import * as React from 'react';
 import TableRow from './TableRow';
 
 interface IProps {
+    btcValue: number,
+    ethValue: number,
     exchanges: string[],
     pair: string
 }
 
-class PairTable extends React.Component<IProps, {}> {
+interface IState {
+    coins: number;
+}
+
+class PairTable extends React.Component<IProps, IState> {
 
     constructor(props: any) {
         super(props);
+
+        this.state = {
+            coins: 1000
+        }
+
+        this.updateCoins = this.updateCoins.bind(this);
     }
 
     public generateExchangePair(exchanges: string[]): object[] {
@@ -24,6 +36,12 @@ class PairTable extends React.Component<IProps, {}> {
         return exchangesPairs;
     }
 
+    public updateCoins(event: any) {
+        this.setState({
+            coins: event.target.value
+        });
+    }
+
     public render() {
         const {
             exchanges
@@ -36,21 +54,29 @@ class PairTable extends React.Component<IProps, {}> {
                     pair={this.props.pair}
                     buyExchange={item.buyExchange}
                     sellExchange={item.sellExchange}
+                    coins={this.state.coins}
                     key={tableRowKey}
                     id={tableRowKey}
+                    btcValue={this.props.btcValue}
+                    ethValue={this.props.ethValue}
                 />
             );
         });
+
         return (
             <div>
                 <header>
-                    <h1>{this.props.pair}</h1>
+                    <h1>{this.props.pair}</h1><br/>
+                    <strong>Coins:</strong> 
+                    <input type="number" min="1" step="1" value={this.state.coins} onChange={this.updateCoins} />
+                    {this.props.pair.split("/")[0]}
                 </header>
                 <table>
                     <tbody>
                         <tr>
                             <th colSpan={2}>Exchanges</th>
                             <th colSpan={3}>Prices</th>
+                            <th colSpan={3}>Order sizes</th>
                         </tr>
                         <tr>
                             <th>Buy</th>
@@ -58,6 +84,9 @@ class PairTable extends React.Component<IProps, {}> {
                             <th>Buy</th>
                             <th>Sell</th>
                             <th>Spread</th>
+                            <th>Buy</th>
+                            <th>Sell</th>
+                            <th>Profit / Loss</th>
                         </tr>
                         {exchangesRows}
                     </tbody>
