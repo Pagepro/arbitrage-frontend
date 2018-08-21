@@ -38,7 +38,7 @@ class PairTable extends React.Component<IProps, IState> {
 
     public updateCoins(event: any) {
         this.setState({
-            coins: event.target.value
+            coins: parseInt(event.target.value, 10)
         });
     }
 

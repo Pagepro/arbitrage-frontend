@@ -18,7 +18,6 @@ interface IState {
     justUpdated: boolean,
     sellValue: number,
     spreadValue: number,
-    buyOrderQuantity: number,
     orderProfitValue: number
 }
 
@@ -31,7 +30,6 @@ class TableRow extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            buyOrderQuantity: 0,
             buyValue: 0,
             justUpdated: false,
             orderProfitValue: 0,
@@ -46,9 +44,7 @@ class TableRow extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         window.addEventListener('websocketMessage',this.handleWebsocketMessage);
-        this.setState({
-            buyOrderQuantity: getBuyOrderQuantity(this.props.pair, this.props.buyExchange, this.props.coins)
-        });
+        this.isComponentMounted = true;
     }
 
     public componentWillUnmount() {
@@ -92,7 +88,7 @@ class TableRow extends React.Component<IProps, IState> {
                                     justUpdated: false
                                 });
                             }
-                        }, 3000);
+                        }, 2000);
                     }
                 );
             }
@@ -184,10 +180,10 @@ class TableRow extends React.Component<IProps, IState> {
                     {this.state.spreadValue}%
                 </td>
                 <td>
-                    {this.state.buyOrderQuantity.toFixed(8)} {firstCurrency}
+                    {getBuyOrderQuantity(this.props.pair, this.props.buyExchange, this.props.coins).toFixed(6)} {firstCurrency}
                 </td>
                 <td>
-                    {this.props.coins.toFixed(8)} {firstCurrency}
+                    {this.props.coins.toFixed(6)} {firstCurrency}
                 </td>
                 <td>
                     { orderProfitValue !== 0

@@ -30,7 +30,7 @@ const marketsConfig = {
     },
     Bitfinex: {
         makerFee: 0.001,
-        marketLink: (pair: string) => `https://cryptowat.ch/markets/bitfinex/${pair.split("/")[0]}/${pair.split("/")[1]}`,
+        marketLink: (pair: string) => `https://www.bitfinex.com/`,
         takerFee: 0.002,
         withdrawals: {
             BTC: 0.0004,
@@ -42,7 +42,7 @@ const marketsConfig = {
     },
     Bitstamp: {
         makerFee: 0.0025,
-        marketLink: (pair: string) => `https://cryptowat.ch/markets/bitstamp/${pair.split("/")[0]}/${pair.split("/")[1]}`,
+        marketLink: (pair: string) => `https://www.bitstamp.net/`,
         takerFee: 0.0025,
         withdrawals: {
             BTC: 0,
