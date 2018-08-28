@@ -2,8 +2,6 @@ import * as React from 'react';
 import TableRow from './TableRow';
 
 interface IProps {
-    btcValue: number,
-    ethValue: number,
     exchanges: string[],
     pair: string
 }
@@ -57,8 +55,6 @@ class PairTable extends React.Component<IProps, IState> {
                     coins={this.state.coins}
                     key={tableRowKey}
                     id={tableRowKey}
-                    btcValue={this.props.btcValue}
-                    ethValue={this.props.ethValue}
                 />
             );
         });

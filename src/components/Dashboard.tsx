@@ -7,9 +7,7 @@ import Header from './Header';
 import PairTable from './PairTable';
 
 interface IState {
-  config: object[],
-  BTCtoPLN: number,
-  ETHtoPLN: number
+  config: object[]
 }
 
 class Dashboard extends React.Component <{}, IState> {
@@ -21,8 +19,6 @@ class Dashboard extends React.Component <{}, IState> {
     super(props);
 
     this.state = {
-      BTCtoPLN: 27000,
-      ETHtoPLN: 1600,
       config: []
     };
 
@@ -83,19 +79,11 @@ class Dashboard extends React.Component <{}, IState> {
           key={pair}
           pair={pair}
           exchanges={exchanges}
-          btcValue={this.state.BTCtoPLN}
-          ethValue={this.state.ETHtoPLN}
         />
     );
     return (
       <div>
         <Header section="dashboard" />
-        <span>
-          <strong>BTC/PLN price:</strong><input type="number" min="1" step="1" value={this.state.BTCtoPLN} onChange={this.updateCurrencyValues("BTCtoPLN")} />
-        </span>
-        <span className="ethValue">
-          <strong>ETH/PLN price:</strong><input type="number" min="1" step="1" value={this.state.ETHtoPLN} onChange={this.updateCurrencyValues("ETHtoPLN")} />
-        </span>
         {tables}
       </div>
     );
