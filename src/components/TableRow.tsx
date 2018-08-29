@@ -8,9 +8,7 @@ interface IProps {
     sellExchange: string,
     id: string,
     pair: string,
-    coins: number,
-    btcValue: number,
-    ethValue: number
+    coins: number
 }
 
 interface IState {
@@ -68,18 +66,32 @@ class TableRow extends React.Component<IProps, IState> {
             if (exchangeName === this.props.buyExchange || exchangeName === this.props.sellExchange) {
 
                 this.setState(exchangeName === this.props.buyExchange ?
-                    {
-                        buyValue,
-                        justUpdated: true,
-                        sellValue: this.state.sellValue,
-                        spreadValue: this.state.spreadValue
-                    } :
-                    {
-                        buyValue: this.state.buyValue,
-                        justUpdated: true,
-                        sellValue,
-                        spreadValue: this.state.spreadValue
-                    }, () => {
+                    buyValue !== this.state.buyValue ?
+                        {
+                            buyValue,
+                            justUpdated: true,
+                            sellValue: this.state.sellValue,
+                            spreadValue: this.state.spreadValue
+                        } :
+                        {
+                            buyValue: this.state.buyValue,
+                            justUpdated: false,
+                            sellValue: this.state.sellValue,
+                            spreadValue: this.state.spreadValue
+                        } :
+                    sellValue !== this.state.sellValue ?
+                        {
+                            buyValue: this.state.buyValue,
+                            justUpdated: true,
+                            sellValue,
+                            spreadValue: this.state.spreadValue
+                        } :
+                        {
+                            buyValue: this.state.buyValue,
+                            justUpdated: false,
+                            sellValue: this.state.sellValue,
+                            spreadValue: this.state.spreadValue
+                        }, () => {
                         this.updateSpread();
                         this.updateProfitValue();
                         setTimeout(() => {
@@ -154,10 +166,6 @@ class TableRow extends React.Component<IProps, IState> {
             orderProfitValue
         } = this.state;
         
-        const PLNValue = secondCurrency === 'BTC'
-            ? (orderProfitValue * this.props.btcValue).toFixed(2)
-            : (orderProfitValue * this.props.ethValue).toFixed(2);
-        
         return (
             <tr className={this.state.justUpdated ? 'updated' : ''} id={this.props.id}>
                 <td>
@@ -188,8 +196,8 @@ class TableRow extends React.Component<IProps, IState> {
                 <td>
                     { orderProfitValue !== 0
                         ? orderProfitValue > 0
-                            ? `${orderProfitValue.toFixed(8)} ${secondCurrency} / ${PLNValue} PLN (PROFIT)`
-                            : `${orderProfitValue.toFixed(8)} ${secondCurrency} / ${PLNValue} PLN (LOSS)`
+                            ? `${orderProfitValue.toFixed(8)} ${secondCurrency} (PROFIT)`
+                            : `${orderProfitValue.toFixed(8)} ${secondCurrency} (LOSS)`
                         : `${orderProfitValue}`
                     }
                 </td>
