@@ -2,6 +2,19 @@ import * as React from 'react';
 import { marketsConfig } from '../config/config';
 import { getBuyOrderQuantity, getBuyOrderValue, getSellOrderValue } from '../utils/ordesValuesCalculator';
 import calculateSpread from '../utils/spreadCalculator';
+import { TableData, TableLink } from '../utils/styledComponents';
+
+const updatedStyle = {
+    backgroundColor: '#ffff4d'
+};
+
+const positiveSpreadStyle = {
+    backgroundColor: '#4dff4d'
+};
+
+const negativeSpreadStyle = {
+    backgroundColor: '#ff1a1a'
+};
 
 interface IProps {
     buyExchange: string,
@@ -142,16 +155,16 @@ class TableRow extends React.Component<IProps, IState> {
         }
     }
 
-    public getSpreadValueCellClass() {
+    public getSpreadValueCellClass(): object {
         const {
             spreadValue
         } = this.state
 
         if (spreadValue === 0) {
-            return '';
+            return {};
         }
 
-        return spreadValue > 0 ? 'positive' : 'negative';
+        return spreadValue > 0 ? positiveSpreadStyle : negativeSpreadStyle;
     }
 
     public render() {
@@ -167,40 +180,40 @@ class TableRow extends React.Component<IProps, IState> {
         } = this.state;
         
         return (
-            <tr className={this.state.justUpdated ? 'updated' : ''} id={this.props.id}>
-                <td>
-                    <a target='_blank' href={buyExchangeLink}>
+            <tr style={this.state.justUpdated ? updatedStyle : {}} id={this.props.id}>
+                <TableData>
+                    <TableLink target='_blank' href={buyExchangeLink}>
                         {this.props.buyExchange}
-                    </a>
-                </td>
-                <td>
-                    <a target='_blank' href={sellExchangeLink}>
+                    </TableLink>
+                </TableData>
+                <TableData>
+                    <TableLink target='_blank' href={sellExchangeLink}>
                         {this.props.sellExchange}
-                    </a>
-                </td>
-                <td>
+                    </TableLink>
+                </TableData>
+                <TableData>
                     {this.state.buyValue.toFixed(8)} {secondCurrency}
-                </td>
-                <td>
+                </TableData>
+                <TableData>
                     {this.state.sellValue.toFixed(8)} {secondCurrency}
-                </td>
-                <td className={this.getSpreadValueCellClass()}>
+                </TableData>
+                <TableData style={this.getSpreadValueCellClass()}>
                     {this.state.spreadValue}%
-                </td>
-                <td>
+                </TableData>
+                <TableData>
                     {getBuyOrderQuantity(this.props.pair, this.props.buyExchange, this.props.coins).toFixed(6)} {firstCurrency}
-                </td>
-                <td>
+                </TableData>
+                <TableData>
                     {this.props.coins.toFixed(6)} {firstCurrency}
-                </td>
-                <td>
+                </TableData>
+                <TableData>
                     { orderProfitValue !== 0
                         ? orderProfitValue > 0
                             ? `${orderProfitValue.toFixed(8)} ${secondCurrency} (PROFIT)`
                             : `${orderProfitValue.toFixed(8)} ${secondCurrency} (LOSS)`
                         : `${orderProfitValue}`
                     }
-                </td>
+                </TableData>
             </tr>
         );
     }

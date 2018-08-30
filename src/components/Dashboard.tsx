@@ -3,6 +3,7 @@ import * as React from 'react';
 import { apiConfig } from '../config/config';
 import { websocketsConfig } from '../config/config';
 import dispatchGlobalEvent from '../utils/dispatchGlobalEvent';
+import { DashboardDiv } from '../utils/styledComponents';
 import Header from './Header';
 import PairTable from './PairTable';
 
@@ -82,10 +83,10 @@ class Dashboard extends React.Component <{}, IState> {
         />
     );
     return (
-      <div>
+      <DashboardDiv>
         <Header section="dashboard" />
         {tables}
-      </div>
+      </DashboardDiv>
     );
   }
   

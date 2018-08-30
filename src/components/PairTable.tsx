@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { DashboardTableRow, Input, PairTableHeader, Table, TableHeader } from '../utils/styledComponents';
 import TableRow from './TableRow';
 
 interface IProps {
@@ -90,31 +91,31 @@ class PairTable extends React.Component<IProps, IState> {
         return (
             <div>
                 <header>
-                    <h1>{this.props.pair}</h1><br/>
+                    <PairTableHeader>{this.props.pair}</PairTableHeader>
                     <strong>Coins:</strong> 
-                    <input type="number" min="1" step="1" value={this.state.coins} onChange={this.updateCoins} />
+                    <Input type="number" min="1" step="1" value={this.state.coins} onChange={this.updateCoins} />
                     {firstCurrency} ({coinsValue.toFixed(8)} {secondCurrency})
                 </header>
-                <table>
+                <Table>
                     <tbody>
-                        <tr>
-                            <th colSpan={2}>Exchanges</th>
-                            <th colSpan={3}>Prices</th>
-                            <th colSpan={3}>Order sizes</th>
-                        </tr>
-                        <tr>
-                            <th>Buy</th>
-                            <th>Sell</th>
-                            <th>Buy</th>
-                            <th>Sell</th>
-                            <th>Spread</th>
-                            <th>Buy</th>
-                            <th>Sell</th>
-                            <th>Profit / Loss</th>
-                        </tr>
+                        <DashboardTableRow>
+                            <TableHeader colSpan={2}>Exchanges</TableHeader>
+                            <TableHeader colSpan={3}>Prices</TableHeader>
+                            <TableHeader colSpan={3}>Order sizes</TableHeader>
+                        </DashboardTableRow>
+                        <DashboardTableRow>
+                            <TableHeader>Buy</TableHeader>
+                            <TableHeader>Sell</TableHeader>
+                            <TableHeader>Buy</TableHeader>
+                            <TableHeader>Sell</TableHeader>
+                            <TableHeader>Spread</TableHeader>
+                            <TableHeader>Buy</TableHeader>
+                            <TableHeader>Sell</TableHeader>
+                            <TableHeader>Profit / Loss</TableHeader>
+                        </DashboardTableRow>
                         {exchangesRows}
                     </tbody>
-                </table>
+                </Table>
             </div>
         );
     }
