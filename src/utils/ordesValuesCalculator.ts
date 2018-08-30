@@ -5,10 +5,17 @@ const getBuyOrderQuantity = (pair: string, exchange: string, coins: number) => {
     const [
         currency
     ] = pair.split("/");
-    const withdrawal = marketsConfig[exchange].withdrawals[currency];
-    const takerFee = marketsConfig[exchange].takerFee;
+    const {
+        takerFee,
+        upfrontFee,
+        withdrawals
+    } = marketsConfig[exchange];
 
-    const value = takerFee ? coins : (1 + takerFee) * coins;
+    const value = upfrontFee
+        ? coins
+        : coins * takerFee + coins
+
+    const withdrawal = withdrawals[currency];
 
     return value + withdrawal;
 }
