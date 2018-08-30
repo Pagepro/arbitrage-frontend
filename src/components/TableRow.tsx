@@ -179,10 +179,10 @@ class TableRow extends React.Component<IProps, IState> {
                     </a>
                 </td>
                 <td>
-                    {this.state.buyValue.toFixed(6)} {secondCurrency}
+                    {this.state.buyValue.toFixed(8)} {secondCurrency}
                 </td>
                 <td>
-                    {this.state.sellValue.toFixed(6)} {secondCurrency}
+                    {this.state.sellValue.toFixed(8)} {secondCurrency}
                 </td>
                 <td className={this.getSpreadValueCellClass()}>
                     {this.state.spreadValue}%

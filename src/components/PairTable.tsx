@@ -7,7 +7,8 @@ interface IProps {
 }
 
 interface IState {
-    coins: number;
+    coins: number,
+    currencyValue: number
 }
 
 class PairTable extends React.Component<IProps, IState> {
@@ -16,10 +17,31 @@ class PairTable extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            coins: 1000
+            coins: 1000,
+            currencyValue: 0
         }
 
         this.updateCoins = this.updateCoins.bind(this);
+        this.updateCurrencyValue = this.updateCurrencyValue.bind(this);
+    }
+
+    public componentDidMount() {
+        window.addEventListener('websocketMessage', this.updateCurrencyValue);
+    }
+
+    public updateCurrencyValue = (ticker: any) => {
+        const firstExchange = this.props.exchanges[0];
+        const {
+            ask: buyValue,
+            pairName,
+            exchangeName
+        } = ticker.detail;
+
+        if (pairName === this.props.pair && exchangeName === firstExchange) {
+            this.setState({
+                currencyValue: buyValue
+            });
+        }
     }
 
     public generateExchangePair(exchanges: string[]): object[] {
@@ -58,6 +80,12 @@ class PairTable extends React.Component<IProps, IState> {
                 />
             );
         });
+        const [
+            firstCurrency,
+            secondCurrency
+        ] = this.props.pair.split("/");
+
+        const coinsValue = this.state.currencyValue * this.state.coins;
 
         return (
             <div>
@@ -65,7 +93,7 @@ class PairTable extends React.Component<IProps, IState> {
                     <h1>{this.props.pair}</h1><br/>
                     <strong>Coins:</strong> 
                     <input type="number" min="1" step="1" value={this.state.coins} onChange={this.updateCoins} />
-                    {this.props.pair.split("/")[0]}
+                    {firstCurrency} ({coinsValue.toFixed(8)} {secondCurrency})
                 </header>
                 <table>
                     <tbody>
