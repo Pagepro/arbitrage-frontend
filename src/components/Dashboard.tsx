@@ -2,8 +2,8 @@ import axios from 'axios';
 import * as React from 'react';
 import { apiConfig } from '../config/config';
 import { websocketsConfig } from '../config/config';
+import { StyledContainer } from '../styled-components/Dashboard';
 import dispatchGlobalEvent from '../utils/dispatchGlobalEvent';
-import { DashboardDiv } from '../utils/styledComponents';
 import Header from './Header';
 import PairTable from './PairTable';
 
@@ -83,10 +83,10 @@ class Dashboard extends React.Component <{}, IState> {
         />
     );
     return (
-      <DashboardDiv>
+      <StyledContainer>
         <Header section="dashboard" />
         {tables}
-      </DashboardDiv>
+      </StyledContainer>
     );
   }
   

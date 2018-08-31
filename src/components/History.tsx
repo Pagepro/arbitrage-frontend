@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as React from 'react';
 import { apiConfig } from '../config/config';
-import { DashboardTableRow, HistoryDiv, HistoryHeader, Table, TableHeader } from '../utils/styledComponents';
+import { StyledContainer, StyledHeader, StyledRow, StyledTable, StyledTableBody, StyledTitle } from '../styled-components/History';
 import Header from './Header';
 import HistoryTableRow from './HistoryTableRow';
 
@@ -38,24 +38,24 @@ class History extends React.Component <{}, IState> {
     );
 
     return (
-      <HistoryDiv>
+      <StyledContainer>
         <Header section="history" />
-        <HistoryHeader>
-          <h3>Last 24 hours best opportunities</h3>
-        </HistoryHeader>
-        <Table>
-            <tbody>
-                <DashboardTableRow>
-                    <TableHeader>Pair name</TableHeader>
-                    <TableHeader>Buy exchange</TableHeader>
-                    <TableHeader>Sell exchange</TableHeader>
-                    <TableHeader>Spread</TableHeader>
-                    <TableHeader>Date & time</TableHeader>
-                </DashboardTableRow>
+        <StyledTitle>
+          Last 24 hours best opportunities
+        </StyledTitle>
+        <StyledTable>
+            <StyledTableBody>
+                <StyledRow>
+                    <StyledHeader>Pair name</StyledHeader>
+                    <StyledHeader>Buy exchange</StyledHeader>
+                    <StyledHeader>Sell exchange</StyledHeader>
+                    <StyledHeader>Spread</StyledHeader>
+                    <StyledHeader>Date & time</StyledHeader>
+                </StyledRow>
                 {rows}
-            </tbody>
-        </Table>
-      </HistoryDiv>
+            </StyledTableBody>
+        </StyledTable>
+      </StyledContainer>
     );
   }
   

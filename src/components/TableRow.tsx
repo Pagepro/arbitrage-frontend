@@ -1,20 +1,8 @@
 import * as React from 'react';
 import { marketsConfig } from '../config/config';
+import { StyledExchangeLink, StyledHighlightedCell, StyledHighlightedRow, StyledTableCell } from '../styled-components/TableRow';
 import { getBuyOrderQuantity, getBuyOrderValue, getSellOrderValue } from '../utils/ordesValuesCalculator';
 import calculateSpread from '../utils/spreadCalculator';
-import { TableData, TableLink } from '../utils/styledComponents';
-
-const updatedStyle = {
-    backgroundColor: '#ffff4d'
-};
-
-const positiveSpreadStyle = {
-    backgroundColor: '#4dff4d'
-};
-
-const negativeSpreadStyle = {
-    backgroundColor: '#ff1a1a'
-};
 
 interface IProps {
     buyExchange: string,
@@ -155,18 +143,6 @@ class TableRow extends React.Component<IProps, IState> {
         }
     }
 
-    public getSpreadValueCellClass(): object {
-        const {
-            spreadValue
-        } = this.state
-
-        if (spreadValue === 0) {
-            return {};
-        }
-
-        return spreadValue > 0 ? positiveSpreadStyle : negativeSpreadStyle;
-    }
-
     public render() {
         const buyExchangeLink = marketsConfig[this.props.buyExchange].marketLink(this.props.pair);
         const sellExchangeLink = marketsConfig[this.props.sellExchange].marketLink(this.props.pair);
@@ -180,41 +156,41 @@ class TableRow extends React.Component<IProps, IState> {
         } = this.state;
         
         return (
-            <tr style={this.state.justUpdated ? updatedStyle : {}} id={this.props.id}>
-                <TableData>
-                    <TableLink target='_blank' href={buyExchangeLink}>
+            <StyledHighlightedRow updated={this.state.justUpdated} id={this.props.id}>
+                <StyledTableCell>
+                    <StyledExchangeLink target='_blank' href={buyExchangeLink}>
                         {this.props.buyExchange}
-                    </TableLink>
-                </TableData>
-                <TableData>
-                    <TableLink target='_blank' href={sellExchangeLink}>
+                    </StyledExchangeLink>
+                </StyledTableCell>
+                <StyledTableCell>
+                    <StyledExchangeLink target='_blank' href={sellExchangeLink}>
                         {this.props.sellExchange}
-                    </TableLink>
-                </TableData>
-                <TableData>
+                    </StyledExchangeLink>
+                </StyledTableCell>
+                <StyledTableCell>
                     {this.state.buyValue.toFixed(8)} {secondCurrency}
-                </TableData>
-                <TableData>
+                </StyledTableCell>
+                <StyledTableCell>
                     {this.state.sellValue.toFixed(8)} {secondCurrency}
-                </TableData>
-                <TableData style={this.getSpreadValueCellClass()}>
+                </StyledTableCell>
+                <StyledHighlightedCell spread={this.state.spreadValue}>
                     {this.state.spreadValue}%
-                </TableData>
-                <TableData>
+                </StyledHighlightedCell>
+                <StyledTableCell>
                     {getBuyOrderQuantity(this.props.pair, this.props.buyExchange, this.props.coins).toFixed(6)} {firstCurrency}
-                </TableData>
-                <TableData>
+                </StyledTableCell>
+                <StyledTableCell>
                     {this.props.coins.toFixed(6)} {firstCurrency}
-                </TableData>
-                <TableData>
+                </StyledTableCell>
+                <StyledTableCell>
                     { orderProfitValue !== 0
                         ? orderProfitValue > 0
                             ? `${orderProfitValue.toFixed(8)} ${secondCurrency} (PROFIT)`
                             : `${orderProfitValue.toFixed(8)} ${secondCurrency} (LOSS)`
                         : `${orderProfitValue}`
                     }
-                </TableData>
-            </tr>
+                </StyledTableCell>
+            </StyledHighlightedRow>
         );
     }
 

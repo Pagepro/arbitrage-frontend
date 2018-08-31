@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { DashboardTableRow, Input, PairTableHeader, Table, TableHeader } from '../utils/styledComponents';
+import {
+    StyledCoins,
+    StyledCoinsSection,
+    StyledContainer,
+    StyledHeader,
+    StyledInput,
+    StyledPairName,
+    StyledRow,
+    StyledTable,
+    StyledTableBody
+} from '../styled-components/PairTable';
 import TableRow from './TableRow';
 
 interface IProps {
@@ -89,34 +99,34 @@ class PairTable extends React.Component<IProps, IState> {
         const coinsValue = this.state.currencyValue * this.state.coins;
 
         return (
-            <div>
-                <header>
-                    <PairTableHeader>{this.props.pair}</PairTableHeader>
-                    <strong>Coins:</strong> 
-                    <Input type="number" min="1" step="1" value={this.state.coins} onChange={this.updateCoins} />
+            <StyledContainer>
+                <StyledCoinsSection>
+                    <StyledPairName>{this.props.pair}</StyledPairName>
+                    <StyledCoins>Coins:</StyledCoins> 
+                    <StyledInput type="number" min="1" step="1" value={this.state.coins} onChange={this.updateCoins} />
                     {firstCurrency} ({coinsValue.toFixed(8)} {secondCurrency})
-                </header>
-                <Table>
-                    <tbody>
-                        <DashboardTableRow>
-                            <TableHeader colSpan={2}>Exchanges</TableHeader>
-                            <TableHeader colSpan={3}>Prices</TableHeader>
-                            <TableHeader colSpan={3}>Order sizes</TableHeader>
-                        </DashboardTableRow>
-                        <DashboardTableRow>
-                            <TableHeader>Buy</TableHeader>
-                            <TableHeader>Sell</TableHeader>
-                            <TableHeader>Buy</TableHeader>
-                            <TableHeader>Sell</TableHeader>
-                            <TableHeader>Spread</TableHeader>
-                            <TableHeader>Buy</TableHeader>
-                            <TableHeader>Sell</TableHeader>
-                            <TableHeader>Profit / Loss</TableHeader>
-                        </DashboardTableRow>
+                </StyledCoinsSection>
+                <StyledTable>
+                    <StyledTableBody>
+                        <StyledRow>
+                            <StyledHeader colSpan={2}>Exchanges</StyledHeader>
+                            <StyledHeader colSpan={3}>Prices</StyledHeader>
+                            <StyledHeader colSpan={3}>Order sizes</StyledHeader>
+                        </StyledRow>
+                        <StyledRow>
+                            <StyledHeader>Buy</StyledHeader>
+                            <StyledHeader>Sell</StyledHeader>
+                            <StyledHeader>Buy</StyledHeader>
+                            <StyledHeader>Sell</StyledHeader>
+                            <StyledHeader>Spread</StyledHeader>
+                            <StyledHeader>Buy</StyledHeader>
+                            <StyledHeader>Sell</StyledHeader>
+                            <StyledHeader>Profit / Loss</StyledHeader>
+                        </StyledRow>
                         {exchangesRows}
-                    </tbody>
-                </Table>
-            </div>
+                    </StyledTableBody>
+                </StyledTable>
+            </StyledContainer>
         );
     }
 
