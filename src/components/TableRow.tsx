@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { marketsConfig } from '../config/config';
-import { StyledExchangeLink, StyledHighlightedCell, StyledHighlightedRow, StyledTableCell } from '../styled-components/TableRow';
+import { TableCell } from '../styled-components/Global';
+import { StyledExchangeLink, StyledHighlightedCell, StyledHighlightedRow } from '../styled-components/TableRow';
 import { getBuyOrderQuantity, getBuyOrderValue, getSellOrderValue } from '../utils/ordesValuesCalculator';
 import calculateSpread from '../utils/spreadCalculator';
 
@@ -60,7 +61,7 @@ class TableRow extends React.Component<IProps, IState> {
         } = ticker.detail;
 
         if (pairName === this.props.pair) {
-            
+
             clearTimeout(this.timeout);
             this.timeout = setTimeout(this.clearState, 10000);
 
@@ -129,7 +130,7 @@ class TableRow extends React.Component<IProps, IState> {
     }
 
     public updateProfitValue() {
-        if (this.state.buyValue <= 0 || this.state.sellValue <= 0) {    
+        if (this.state.buyValue <= 0 || this.state.sellValue <= 0) {
             this.setState({
                 orderProfitValue: 0
             });
@@ -150,46 +151,46 @@ class TableRow extends React.Component<IProps, IState> {
             firstCurrency,
             secondCurrency
         ] = this.props.pair.split("/");
-        
+
         const {
             orderProfitValue
         } = this.state;
-        
+
         return (
             <StyledHighlightedRow updated={this.state.justUpdated} id={this.props.id}>
-                <StyledTableCell>
+                <TableCell>
                     <StyledExchangeLink target='_blank' href={buyExchangeLink}>
                         {this.props.buyExchange}
                     </StyledExchangeLink>
-                </StyledTableCell>
-                <StyledTableCell>
+                </TableCell>
+                <TableCell>
                     <StyledExchangeLink target='_blank' href={sellExchangeLink}>
                         {this.props.sellExchange}
                     </StyledExchangeLink>
-                </StyledTableCell>
-                <StyledTableCell>
+                </TableCell>
+                <TableCell>
                     {this.state.buyValue.toFixed(8)} {secondCurrency}
-                </StyledTableCell>
-                <StyledTableCell>
+                </TableCell>
+                <TableCell>
                     {this.state.sellValue.toFixed(8)} {secondCurrency}
-                </StyledTableCell>
+                </TableCell>
                 <StyledHighlightedCell spread={this.state.spreadValue}>
                     {this.state.spreadValue}%
                 </StyledHighlightedCell>
-                <StyledTableCell>
+                <TableCell>
                     {getBuyOrderQuantity(this.props.pair, this.props.buyExchange, this.props.coins).toFixed(6)} {firstCurrency}
-                </StyledTableCell>
-                <StyledTableCell>
+                </TableCell>
+                <TableCell>
                     {this.props.coins.toFixed(6)} {firstCurrency}
-                </StyledTableCell>
-                <StyledTableCell>
+                </TableCell>
+                <TableCell>
                     { orderProfitValue !== 0
                         ? orderProfitValue > 0
                             ? `${orderProfitValue.toFixed(8)} ${secondCurrency} (PROFIT)`
                             : `${orderProfitValue.toFixed(8)} ${secondCurrency} (LOSS)`
                         : `${orderProfitValue}`
                     }
-                </StyledTableCell>
+                </TableCell>
             </StyledHighlightedRow>
         );
     }
