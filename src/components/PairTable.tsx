@@ -1,14 +1,10 @@
 import * as React from 'react';
+import { Heading, Table, TableBody, TableHeader } from '../styled-components/Global';
 import {
     StyledCoins,
     StyledCoinsSection,
     StyledContainer,
-    StyledHeader,
-    StyledInput,
-    StyledPairName,
-    StyledRow,
-    StyledTable,
-    StyledTableBody
+    StyledInput
 } from '../styled-components/PairTable';
 import TableRow from './TableRow';
 
@@ -101,31 +97,31 @@ class PairTable extends React.Component<IProps, IState> {
         return (
             <StyledContainer>
                 <StyledCoinsSection>
-                    <StyledPairName>{this.props.pair}</StyledPairName>
-                    <StyledCoins>Coins:</StyledCoins> 
+                    <Heading>{this.props.pair}</Heading>
+                    <StyledCoins>Coins:</StyledCoins>
                     <StyledInput type="number" min="1" step="1" value={this.state.coins} onChange={this.updateCoins} />
                     {firstCurrency} ({coinsValue.toFixed(8)} {secondCurrency})
                 </StyledCoinsSection>
-                <StyledTable>
-                    <StyledTableBody>
-                        <StyledRow>
-                            <StyledHeader colSpan={2}>Exchanges</StyledHeader>
-                            <StyledHeader colSpan={3}>Prices</StyledHeader>
-                            <StyledHeader colSpan={3}>Order sizes</StyledHeader>
-                        </StyledRow>
-                        <StyledRow>
-                            <StyledHeader>Buy</StyledHeader>
-                            <StyledHeader>Sell</StyledHeader>
-                            <StyledHeader>Buy</StyledHeader>
-                            <StyledHeader>Sell</StyledHeader>
-                            <StyledHeader>Spread</StyledHeader>
-                            <StyledHeader>Buy</StyledHeader>
-                            <StyledHeader>Sell</StyledHeader>
-                            <StyledHeader>Profit / Loss</StyledHeader>
-                        </StyledRow>
+                <Table>
+                    <TableBody>
+                        <tr>
+                            <TableHeader colSpan={2}>Exchanges</TableHeader>
+                            <TableHeader colSpan={3}>Prices</TableHeader>
+                            <TableHeader colSpan={3}>Order sizes</TableHeader>
+                        </tr>
+                        <tr>
+                            <TableHeader>Buy</TableHeader>
+                            <TableHeader>Sell</TableHeader>
+                            <TableHeader>Buy</TableHeader>
+                            <TableHeader>Sell</TableHeader>
+                            <TableHeader>Spread</TableHeader>
+                            <TableHeader>Buy</TableHeader>
+                            <TableHeader>Sell</TableHeader>
+                            <TableHeader>Profit / Loss</TableHeader>
+                        </tr>
                         {exchangesRows}
-                    </StyledTableBody>
-                </StyledTable>
+                    </TableBody>
+                </Table>
             </StyledContainer>
         );
     }
