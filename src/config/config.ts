@@ -1,8 +1,10 @@
+const envDomain = process.env.WEBSOCKET_DOMAIN
+
 const config: any = {
     get websocketBase () {
         const protocol = window.location.protocol === "https:" ? "wss:" : "ws:"
 
-        return `${protocol}//${process.env.WEBSCOKET_DOMAIN || window.location.host}`
+        return `${protocol}//${envDomain || window.location.host}`
     }
 }
 
