@@ -6,9 +6,9 @@ exports.handler = function (event, _, callback) {
     ws = faasGrip.lambdaGetWebSocket(event)
   } catch (err) {
     callback(null, {
-      statusCode: 400,
+      body: 'Not a WebSocket-over-HTTP request\n',
       headers: {'Content-Type': 'text/plain'},
-      body: 'Not a WebSocket-over-HTTP request\n'
+      statusCode: 400
     })
     return
   }
