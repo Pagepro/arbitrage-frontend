@@ -2,4 +2,4 @@
 # /*    /index.html   200
 
 # Redirect to our production API
-/api/* http://172.104.230.32/api/:splat
+https://arbmonitor.com/api/* http://172.104.230.32/api/:splat 200
