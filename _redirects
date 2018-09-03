@@ -2,4 +2,5 @@
 /*    /index.html   200
 
 # Redirect to our production API
-/api/* http://172.104.230.32/api/:splat
+/api/config http://172.104.230.32/api/config
+/api/history/:pair http://172.104.230.32/api/history/:pair
