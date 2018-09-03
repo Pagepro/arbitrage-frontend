@@ -1,0 +1,5 @@
+# History Pushstate and Single Page Apps
+/*    /index.html   200
+
+# Redirect to our production API
+/api/* http://172.104.230.32/api/:splat
