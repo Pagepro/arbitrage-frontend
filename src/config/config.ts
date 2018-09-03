@@ -1,8 +1,8 @@
 const config: any = {
     get websocketBase () {
         const protocol = window.location.protocol === "https:" ? "wss:" : "ws:"
-    
-        return `${protocol}//${window.location.host}`
+
+        return `${protocol}//${process.env.WEBSCOKET_DOMAIN || window.location.host}`
     }
 }
 

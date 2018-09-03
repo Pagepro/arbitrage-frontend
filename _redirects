@@ -3,4 +3,3 @@
 
 # Redirect to our production API
 https://arbmonitor.com/api/* http://172.104.230.32/api/:splat 200
-ws://arbmonitor.com/ws/exchanges wss://172.104.230.32/ws/exchanges
