@@ -1,10 +1,11 @@
-const envDomain = process.env.REACT_APP_WEBSOCKET_DOMAIN
+const envWebsocketDomain = process.env.REACT_APP_WEBSOCKET_DOMAIN
+const envWebsocketProcotcol = process.env.REACT_APP_WEBSOCKET_PROTOCOL
 
 const config: any = {
     get websocketBase () {
         const protocol = window.location.protocol === "https:" ? "wss:" : "ws:"
 
-        return `${protocol}//${envDomain || window.location.host}`
+        return `${envWebsocketProcotcol || protocol}//${envWebsocketDomain || window.location.host}`
     }
 }
 
