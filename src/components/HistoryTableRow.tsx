@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as Moment from 'moment';
 import * as React from 'react';
 import { apiConfig } from '../config/config';
+import { TableCell } from '../styled-components/Global';
 
 interface IProps {
     pair: string
@@ -50,17 +51,17 @@ class HistoryTableRow extends React.Component <IProps, IState> {
   public render() {
     return (
         <tr>
-            <td className='pair'>{this.props.pair}</td>
-            <td>{this.state.buyExchange}</td>
-            <td>{this.state.sellExchange}</td>
-            <td>
+            <TableCell>{this.props.pair}</TableCell>
+            <TableCell>{this.state.buyExchange}</TableCell>
+            <TableCell>{this.state.sellExchange}</TableCell>
+            <TableCell>
                 {
                     this.state.spread !== '-'
                     ? `${this.state.spread}%`
                     : this.state.spread
                 }
-            </td>
-            <td>{this.state.time}</td>
+            </TableCell>
+            <TableCell>{this.state.time}</TableCell>
         </tr>
     );
   }

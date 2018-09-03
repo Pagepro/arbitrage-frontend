@@ -9,13 +9,11 @@ class App extends React.Component {
   public render() {
     return (
       <Router>
-        <div className="container">
-          <Switch>
-            <Route exact={true} path="/dashboard" component={Dashboard} />
-            <Route exact={true} path="/history" component={History} />
-            <Redirect from="*" to="/dashboard" />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact={true} path="/dashboard" component={Dashboard} />
+          <Route exact={true} path="/history" component={History} />
+          <Redirect from="*" to="/dashboard" />
+        </Switch>
       </Router>
     );
   }

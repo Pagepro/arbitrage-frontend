@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as React from 'react';
 import { apiConfig } from '../config/config';
+import { AppInner, Heading, StyledContainer, Table, TableBody, TableHeader } from '../styled-components/Global';
 import Header from './Header';
 import HistoryTableRow from './HistoryTableRow';
 
@@ -37,27 +38,28 @@ class History extends React.Component <{}, IState> {
     );
 
     return (
-      <div>
-        <Header section="history" />
-        <header className="historyHeader">
-          <h3>Last 24 hours best opportunities</h3>
-        </header>
-        <table className="history">
-            <tbody>
-                <tr>
-                    <th>Pair name</th>
-                    <th>Buy exchange</th>
-                    <th>Sell exchange</th>
-                    <th>Spread</th>
-                    <th>Date & time</th>
-                </tr>
-                {rows}
-            </tbody>
-        </table>
-      </div>
+      <StyledContainer>
+        <AppInner>
+          <Header section="history" />
+          <Heading>
+            Last 24 hours best arbitrage opportunities
+          </Heading>
+          <Table>
+              <TableBody>
+                  <tr>
+                      <TableHeader>Pair name</TableHeader>
+                      <TableHeader>Buy exchange</TableHeader>
+                      <TableHeader>Sell exchange</TableHeader>
+                      <TableHeader>Spread</TableHeader>
+                      <TableHeader>Date & time</TableHeader>
+                  </tr>
+                  {rows}
+              </TableBody>
+          </Table>
+        </AppInner>
+      </StyledContainer>
     );
   }
-  
 }
 
 export default History;

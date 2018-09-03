@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { StyledContainer, StyledLink, StyledLogo, StyledNav } from '../styled-components/Header';
 
 interface IProps {
     section: string
@@ -13,18 +14,19 @@ class Header extends React.Component <IProps, {}> {
 
   public render() {
     return (
-        <div className="siteHeader">
-            <Link to="/">
-                <header>
-                    Arbitrage App
-                </header>
-            </Link>
-            <NavLink to="/dashboard" className="nav" activeClassName="active">Dashboard</NavLink>
-            <NavLink to="/history" className="nav" activeClassName="active">History</NavLink>
-        </div>
+        <StyledContainer>
+            <StyledLogo>
+              <Link to="/">
+                Cryptocurrency Arbitrage Monitor
+              </Link>
+            </StyledLogo>
+            <StyledNav>
+              <StyledLink to="/dashboard">Dashboard</StyledLink>
+              <StyledLink to="/history">History</StyledLink>
+            </StyledNav>
+        </StyledContainer>
     );
   }
-  
 }
 
 export default Header;

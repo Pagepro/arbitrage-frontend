@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { marketsConfig } from '../config/config';
+import { TableCell } from '../styled-components/Global';
+import { StyledExchangeLink, StyledHighlightedCell, StyledHighlightedRow } from '../styled-components/TableRow';
 import { getBuyOrderQuantity, getBuyOrderValue, getSellOrderValue } from '../utils/ordesValuesCalculator';
 import calculateSpread from '../utils/spreadCalculator';
 
@@ -59,7 +61,7 @@ class TableRow extends React.Component<IProps, IState> {
         } = ticker.detail;
 
         if (pairName === this.props.pair) {
-            
+
             clearTimeout(this.timeout);
             this.timeout = setTimeout(this.clearState, 10000);
 
@@ -128,7 +130,7 @@ class TableRow extends React.Component<IProps, IState> {
     }
 
     public updateProfitValue() {
-        if (this.state.buyValue <= 0 || this.state.sellValue <= 0) {    
+        if (this.state.buyValue <= 0 || this.state.sellValue <= 0) {
             this.setState({
                 orderProfitValue: 0
             });
@@ -142,18 +144,6 @@ class TableRow extends React.Component<IProps, IState> {
         }
     }
 
-    public getSpreadValueCellClass() {
-        const {
-            spreadValue
-        } = this.state
-
-        if (spreadValue === 0) {
-            return '';
-        }
-
-        return spreadValue > 0 ? 'positive' : 'negative';
-    }
-
     public render() {
         const buyExchangeLink = marketsConfig[this.props.buyExchange].marketLink(this.props.pair);
         const sellExchangeLink = marketsConfig[this.props.sellExchange].marketLink(this.props.pair);
@@ -161,47 +151,47 @@ class TableRow extends React.Component<IProps, IState> {
             firstCurrency,
             secondCurrency
         ] = this.props.pair.split("/");
-        
+
         const {
             orderProfitValue
         } = this.state;
-        
+
         return (
-            <tr className={this.state.justUpdated ? 'updated' : ''} id={this.props.id}>
-                <td>
-                    <a target='_blank' href={buyExchangeLink}>
+            <StyledHighlightedRow updated={this.state.justUpdated} id={this.props.id}>
+                <TableCell>
+                    <StyledExchangeLink target='_blank' href={buyExchangeLink}>
                         {this.props.buyExchange}
-                    </a>
-                </td>
-                <td>
-                    <a target='_blank' href={sellExchangeLink}>
+                    </StyledExchangeLink>
+                </TableCell>
+                <TableCell>
+                    <StyledExchangeLink target='_blank' href={sellExchangeLink}>
                         {this.props.sellExchange}
-                    </a>
-                </td>
-                <td>
+                    </StyledExchangeLink>
+                </TableCell>
+                <TableCell>
                     {this.state.buyValue.toFixed(8)} {secondCurrency}
-                </td>
-                <td>
+                </TableCell>
+                <TableCell>
                     {this.state.sellValue.toFixed(8)} {secondCurrency}
-                </td>
-                <td className={this.getSpreadValueCellClass()}>
+                </TableCell>
+                <StyledHighlightedCell spread={this.state.spreadValue}>
                     {this.state.spreadValue}%
-                </td>
-                <td>
+                </StyledHighlightedCell>
+                <TableCell>
                     {getBuyOrderQuantity(this.props.pair, this.props.buyExchange, this.props.coins).toFixed(6)} {firstCurrency}
-                </td>
-                <td>
+                </TableCell>
+                <TableCell>
                     {this.props.coins.toFixed(6)} {firstCurrency}
-                </td>
-                <td>
+                </TableCell>
+                <TableCell>
                     { orderProfitValue !== 0
                         ? orderProfitValue > 0
                             ? `${orderProfitValue.toFixed(8)} ${secondCurrency} (PROFIT)`
                             : `${orderProfitValue.toFixed(8)} ${secondCurrency} (LOSS)`
                         : `${orderProfitValue}`
                     }
-                </td>
-            </tr>
+                </TableCell>
+            </StyledHighlightedRow>
         );
     }
 
