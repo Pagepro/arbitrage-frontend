@@ -1,4 +1,4 @@
-const envDomain = process.env.WEBSOCKET_DOMAIN
+const envDomain = process.env.REACT_APP_WEBSOCKET_DOMAIN
 
 const config: any = {
     get websocketBase () {
