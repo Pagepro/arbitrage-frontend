@@ -10,8 +10,8 @@ const config: any = {
 }
 
 const apiConfig = {
-    config: `/api/config`,
-    history: `/api/history`
+    config: '/api/config',
+    history: '/api/history'
 }
 
 const websocketsConfig = {
@@ -69,6 +69,16 @@ const marketsConfig = {
             ETH: 0.006,
             NEO: 0.025,
             XLM: 0.01
+        }
+    },
+    CoinBene: {
+        makerFee: 0.001,
+        marketLink: (pair: string) => `https://www.coinbene.com/#/market?pairId=${pair.split("/")[0]}${pair.split("/")[1]}`,
+        takerFee: 0.001,
+        upfrontFee: false,
+        withdrawals: {
+            BTC: 0.001,
+            ETH: 0.01
         }
     },
     GDAX: {
