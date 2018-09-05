@@ -185,9 +185,9 @@ class TableRow extends React.Component<IProps, IState> {
                 </TableCell>
                 <StyledHighlightedProfitCell profit={orderProfitValue}>
                     { orderProfitValue !== 0
-                        ? orderProfitValue > 0
-                            ? `${orderProfitValue.toFixed(8)} ${secondCurrency} (PROFIT)`
-                            : `${orderProfitValue.toFixed(8)} ${secondCurrency} (LOSS)`
+                        ? `${orderProfitValue.toFixed(8)} ${secondCurrency} ${orderProfitValue > 0
+                            ? '(PROFIT)'
+                            : '(LOSS)'}`
                         : `${orderProfitValue}`
                     }
                 </StyledHighlightedProfitCell>

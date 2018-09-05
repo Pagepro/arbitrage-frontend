@@ -10,8 +10,8 @@ const config: any = {
 }
 
 const apiConfig = {
-    config: `http://${envWebsocketDomain}/api/config`,
-    history: `http://${envWebsocketDomain}/api/history`
+    config: `/api/config`,
+    history: `/api/history`
 }
 
 const websocketsConfig = {
