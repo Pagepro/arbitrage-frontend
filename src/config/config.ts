@@ -71,6 +71,16 @@ const marketsConfig = {
             XLM: 0.01
         }
     },
+    CoinBene: {
+        makerFee: 0.001,
+        marketLink: (pair: string) => `https://www.coinbene.com/#/market?pairId=${pair.split("/")[0]}${pair.split("/")[1]}`,
+        takerFee: 0.001,
+        upfrontFee: false,
+        withdrawals: {
+            BTC: 0.001,
+            ETH: 0.01
+        }
+    },
     GDAX: {
         makerFee: 0,
         marketLink: (pair: string) => `https://pro.coinbase.com/trade/${pair.replace("/", "-")}`,

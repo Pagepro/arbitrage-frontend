@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { marketsConfig } from '../config/config';
 import { TableCell } from '../styled-components/Global';
-import { StyledExchangeLink, StyledHighlightedCell, StyledHighlightedRow } from '../styled-components/TableRow';
+import { StyledExchangeLink, StyledHighlightedCell, StyledHighlightedProfitCell, StyledHighlightedRow } from '../styled-components/TableRow';
 import { getBuyOrderQuantity, getBuyOrderValue, getSellOrderValue } from '../utils/ordesValuesCalculator';
 import calculateSpread from '../utils/spreadCalculator';
 
@@ -183,14 +183,14 @@ class TableRow extends React.Component<IProps, IState> {
                 <TableCell>
                     {this.props.coins.toFixed(6)} {firstCurrency}
                 </TableCell>
-                <TableCell>
+                <StyledHighlightedProfitCell profit={orderProfitValue}>
                     { orderProfitValue !== 0
-                        ? orderProfitValue > 0
-                            ? `${orderProfitValue.toFixed(8)} ${secondCurrency} (PROFIT)`
-                            : `${orderProfitValue.toFixed(8)} ${secondCurrency} (LOSS)`
+                        ? `${orderProfitValue.toFixed(8)} ${secondCurrency} ${orderProfitValue > 0
+                            ? '(PROFIT)'
+                            : '(LOSS)'}`
                         : `${orderProfitValue}`
                     }
-                </TableCell>
+                </StyledHighlightedProfitCell>
             </StyledHighlightedRow>
         );
     }
