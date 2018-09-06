@@ -145,13 +145,19 @@ class TableRow extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const buyExchangeLink = marketsConfig[this.props.buyExchange].marketLink(this.props.pair);
-        const sellExchangeLink = marketsConfig[this.props.sellExchange].marketLink(this.props.pair);
+        const buyExchange = marketsConfig[this.props.buyExchange];
+        const sellExchange = marketsConfig[this.props.sellExchange];
+
+        if (!buyExchange || !sellExchange) {
+            return null;
+        }
+
+        const buyExchangeLink = buyExchange.marketLink(this.props.pair);
+        const sellExchangeLink = sellExchange.marketLink(this.props.pair);
         const [
             firstCurrency,
             secondCurrency
         ] = this.props.pair.split("/");
-
         const {
             orderProfitValue
         } = this.state;
