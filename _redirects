@@ -1,2 +1,5 @@
+# API
+/api/*  https://arbitrage-app.herokuapp.com/api/:splat  200
+
 # History Pushstate and Single Page Apps
-# /*    /index.html   200
+/*    /index.html   200
