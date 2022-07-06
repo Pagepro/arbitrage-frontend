@@ -7,7 +7,7 @@
     "@types/react-router-dom": "^4.3.0",
     "@types/ws": "^5.1.2",
     "axios": "^0.18.0",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
